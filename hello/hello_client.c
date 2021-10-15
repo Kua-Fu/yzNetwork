@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
     if(sock == -1)
 	error_handling("socket() error");
 
-    memset(*serv_addr, 0, sizeof(serv_addr));
+    memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family=AF_INET;
     serv_addr.sin_addr.s_addr=inet_addr(argv[1]);
     serv_addr.sin_port=htons(atoi(argv[2]));
