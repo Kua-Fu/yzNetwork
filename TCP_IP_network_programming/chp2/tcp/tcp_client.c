@@ -13,7 +13,8 @@ int main(int argc, char* argv[])
     int sock;
     struct sockaddr_in serv_addr;
     char message[30];
-    int str_len;
+    int str_len=0;
+    int idx=0, read_len=0;
 
     if(argc !=3)
     {
@@ -37,11 +38,24 @@ int main(int argc, char* argv[])
     if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr))==-1)
 	error_handling("connect() error");
 
-    str_len=read(sock, message, sizeof(message)-1);
-    if(str_len==-1)
-	error_handling("read() error");
+    // read 循环反复调用, 每次读取1个字节
+    // read 返回0，则循环条件为false, 跳出while循环
+    // str_len中保存了读取的总字节数
+    while(read_len=read(sock, &message[idx++], 1))
+    {
+	if(read_len==-1)
+	    error_handling("read() error!");
+	str_len+=read_len;
+    }
 
     printf("message from server: %s\n", message);
+    printf("function read call count: %d\n", str_len);
+
+    /* str_len=read(sock, message, sizeof(message)-1); */
+    /* if(str_len==-1) */
+    /* 	error_handling("read() error"); */
+
+    /* printf("message from server: %s\n", message); */
     close(sock);
     return 0;
 }
@@ -49,6 +63,5 @@ int main(int argc, char* argv[])
 void error_handling(char *message)
 {
     fputs(message, stderr);
-    fputc('\n', stderr);
-    exit(1);
+    fputc('\n', stderr);    exit(1);
 }
