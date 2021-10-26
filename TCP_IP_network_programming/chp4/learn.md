@@ -1,0 +1,4 @@
+根据数据传输方式的不同，基于网络协议的套接字一般分为TCP套接字和UDP套接字，因为TCP套接字是面向连接的，因此又称为基于流 stream 的套接字
+
+
+TCP是Transmission Control Protocol 传输控制协议
