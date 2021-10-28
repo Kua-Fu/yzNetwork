@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 		    write(ep_events[i].data.fd, buf, str_len);
 		}
 	    }
-
+       }
     }
     close(serv_sock);
     close(epfd);
